@@ -1,9 +1,9 @@
 'use strict'
 
-// Adiciona a função de clique ao botão de busca
+// adiciona clique ao botão de busca
 document.getElementById("search-button").addEventListener("click", redirecionarParaResultados)
 
-// Adiciona um evento ao campo de entrada para capturar a tecla "Enter" e chamar a função redirecionarParaResultados
+// faz funcionar a tecla "Enter" 
 document.getElementById("search-input").addEventListener("keypress", function (e) {
     if (e.key === "Enter") { // Verifica se a tecla pressionada foi "Enter"
         redirecionarParaResultados() // Chama a função para redirecionar o usuário
