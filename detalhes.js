@@ -1,6 +1,5 @@
 'use strict' 
 
-// Aguarda o carregamento completo do DOM antes de executar o código
 document.addEventListener("DOMContentLoaded", function () {
     const parametros = new URLSearchParams(window.location.search)
     const idFilme = parametros.get("id")
