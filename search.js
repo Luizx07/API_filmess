@@ -1,15 +1,14 @@
 'use strict'
-document.getElementById("search-button").addEventListener("click", redirectToResults);
+document.getElementById("search-button").addEventListener("click", redirecionarParaResultados);
 document.getElementById("search-input").addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
-        redirectToResults();
+        redirecionarParaResultados();
     }
 });
 
-function redirectToResults() {
-    const query = document.getElementById("search-input").value.trim();
-    if (!query) return;
-    
-    // Redireciona para a página de resultados com o termo na URL
-    window.location.href = `results.html?query=${encodeURIComponent(query)}`;
+function redirecionarParaResultados() {
+    const consulta = document.getElementById("search-input").value.trim();
+    if (!consulta) return;
+
+    window.location.href = `results.html?query=${encodeURIComponent(consulta)}`;
 }

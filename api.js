@@ -1,29 +1,29 @@
 'use strict'
 
-document.getElementById('search-button').addEventListener('click', function() {
-    const query = document.getElementById('search').value;
-    fetchData(query);
+document.getElementById('search-button').addEventListener('click', function() { 
+    const consulta = document.getElementById('search').value;
+    buscarDados(consulta);
 });
 
-async function fetchData(query) {
-    const response = await fetch(`https://api.example.com/search?query=${query}`);
-    const data = await response.json();
-    displayResults(data);
+async function buscarDados(consulta) {
+    const resposta = await fetch(`https://api.example.com/search?query=${consulta}`);
+    const dados = await resposta.json();
+    exibirResultados(dados);
 }
 
-function displayResults(data) {
-    const resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = '';
+function exibirResultados(dados) {
+    const containerResultados = document.getElementById('results');
+    containerResultados.innerHTML = '';
 
-    data.results.forEach(item => {
-        const resultItem = document.createElement('div');
-        resultItem.classList.add('result-item');
-        resultItem.innerHTML = `
+    dados.results.forEach(item => {
+        const elementoResultado = document.createElement('div');
+        elementoResultado.classList.add('result-item');
+        elementoResultado.innerHTML = `
             <h3>${item.title}</h3>
             <p>Ano de lançamento: ${item.release_year}</p>
             <p>Tipo: ${item.type}</p>
             <p><a href="#">Saiba mais sobre...</a></p>
         `;
-        resultsContainer.appendChild(resultItem);
+        containerResultados.appendChild(elementoResultado);
     });
 }

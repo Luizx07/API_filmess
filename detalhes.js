@@ -1,74 +1,69 @@
-'use strict'
-
 document.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    const movieId = params.get("id");  // Captura o ID do filme da URL
+    const parametros = new URLSearchParams(window.location.search);
+    const idFilme = parametros.get("id");
 
-    console.log("ID do filme:", movieId); // Verificação do ID passado na URL
+    console.log("ID do filme:", idFilme);
 
-    if (movieId) {
-        fetchDetalhes(movieId);  // Chamando a função para pegar os detalhes do filme
+    if (idFilme) {
+        buscarDetalhes(idFilme);
     } else {
         console.error("ID do filme não encontrado na URL!");
         document.getElementById("detalhes").innerHTML = "<p>Erro: ID do filme não encontrado.</p>";
     }
 });
 
-async function fetchDetalhes(id) {  // Alterado de "fetchMovieDetails" para "fetchDetalhes"
-    const apiKey = "K66WoK3A5L3ukxBkspeOqxT1GmAHOIXf44qDJAvG";
-    const url = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${apiKey}&append_to_response=sources`;
+async function buscarDetalhes(id) { 
+    const chaveApi = "K66WoK3A5L3ukxBkspeOqxT1GmAHOIXf44qDJAvG";
+    const url = `https://api.watchmode.com/v1/title/${id}/details/?apiKey=${chaveApi}&append_to_response=sources`;
 
     try {
-        console.log("Fazendo requisição para a API com URL:", url); // Verificação da URL de requisição
-        const response = await fetch(url);
-        
-        // Verifica se a resposta da API é válida
-        if (!response.ok) {
+        console.log("Fazendo requisição para a API com URL:", url);
+        const resposta = await fetch(url);
+
+        if (!resposta.ok) {
             throw new Error("Erro na resposta da API");
         }
         
-        const data = await response.json();
+        const dados = await resposta.json();
 
-        console.log("Dados retornados:", data); // Verificação dos dados recebidos da API
-
-        displayDetalhes(data);  // Exibindo os detalhes do filme
-    } catch (error) {
-        console.error("Erro ao buscar dados:", error);
+        console.log("Dados retornados:", dados);
+        exibirDetalhes(dados);
+    } catch (erro) {
+        console.error("Erro ao buscar dados:", erro);
         document.getElementById("detalhes").innerHTML = "<p>Erro ao carregar as informações do filme.</p>";
     }
 }
 
-function displayDetalhes(data) {  // Exibe os detalhes do filme na página
-    const detalhesContainer = document.getElementById("detalhes");
+function exibirDetalhes(dados) {
+    const containerDetalhes = document.getElementById("detalhes");
 
-    if (!data) {
-        detalhesContainer.innerHTML = "<p>Detalhes não encontrados.</p>";
+    if (!dados) {
+        containerDetalhes.innerHTML = "<p>Detalhes não encontrados.</p>";
         return;
     }
 
-    // Verificar se os dados têm as propriedades necessárias
-    const banner = data.poster ? `<img src="${data.posterMedium}" alt="${data.title}" class="movie-banner">` : '';
-    const titulo = `<h2>${data.title || "Título não disponível"}</h2>`;
-    const data_lacamento = `<p><strong>Data de lançamento:</strong> ${data.release_date || "Desconhecido"}</p>`;
-    const generos = `<p><strong>Gêneros:</strong> ${data.genres ? data.genres.join(", ") : "Desconhecido"}</p>`;
-    const sinopse = `<p><strong>Sinopse:</strong> ${data.plot_overview || "Sinopse não disponível."}</p>`;
-    const avaliacoes = `<p><strong>Avaliações:</strong> ${data.user_rating || "Sem avaliações."}</p>`;
-    const streams = data.sources ? 
-        `<p><strong>Onde Assistir:</strong> ${data.sources.map(source => `<a href="${source.url}" target="_blank">${source.name}</a>`).join(", ")}</p>` 
+    const banner = dados.poster ? `<img src="${dados.posterMedium}" alt="${dados.title}" class="movie-banner">` : '';
+    const titulo = `<h2>${dados.title || "Título não disponível"}</h2>`;
+    const dataLancamento = `<p><strong>Data de lançamento:</strong> ${dados.release_date || "Desconhecido"}</p>`;
+    const generos = `<p><strong>Gêneros:</strong> ${dados.genre_names ? dados.genre_names.join(", ") : "Desconhecido"}</p>`;
+    const sinopse = `<p><strong>Sinopse:</strong> ${dados.plot_overview || "Sinopse não disponível."}</p>`;
+    const avaliacoes = `<p><strong>Avaliações:</strong> ${dados.user_rating || "Sem avaliações."}</p>`;
+    const streams = dados.sources ? 
+        `<p><strong>Onde Assistir:</strong> ${dados.sources.map(source => `<a href="${source.url}" target="_blank">${source.name}</a>`).join(", ")}</p>` 
         : "<p><strong>Onde Assistir:</strong> Não disponível.</p>";
 
-    detalhesContainer.innerHTML = `
+    containerDetalhes.innerHTML = `
         ${banner}
         ${titulo}
-        ${data_lacamento}
+        ${dataLancamento}
         ${generos}
         ${sinopse}
         ${avaliacoes}
         ${streams}
     `;
 }
-function goBack() {
-    window.location.href = "index.html";  // Redireciona para a página de resultados
-}
 
+function voltar() {
+    window.location.href = "index.html";
+}
 

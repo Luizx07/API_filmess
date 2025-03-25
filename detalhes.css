@@ -17,30 +17,30 @@ body {
     margin: auto;
 }
 
-.detalhes { /* Alterado o nome da classe para "detalhes" */
+.detalhes { 
     margin-top: 20px;
     text-align: left;
 }
 
 
 
-.detalhes h2 { /* Alterado de ".movie-details h2" para ".detalhes h2" */
+.detalhes h2 {
     font-size: 28px;
     margin-bottom: 10px;
 }
 
-.detalhes p { /* Alterado de ".movie-details p" para ".detalhes p" */
+.detalhes p {
     font-size: 16px;
     color: #cccccc;
     margin-bottom: 10px;
 }
 
-.detalhes a { /* Alterado de ".movie-details a" para ".detalhes a" */
+.detalhes a {
     color: #4DA8DA;
     text-decoration: none;
 }
 
-.detalhes a:hover { /* Alterado de ".movie-details a:hover" para ".detalhes a:hover" */
+.detalhes a:hover {
     text-decoration: underline;
 }
 

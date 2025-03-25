@@ -1,72 +1,72 @@
 'use strict'
-document.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get("query");
 
-    if (query) {
-        fetchMovies(query);
+document.addEventListener("DOMContentLoaded", function () {
+    const parametros = new URLSearchParams(window.location.search);
+    const consulta = parametros.get("query");
+
+    if (consulta) {
+        buscarFilmes(consulta);
     }
 });
 
-async function fetchMovies(query) {
-    const apiKey = "K66WoK3A5L3ukxBkspeOqxT1GmAHOIXf44qDJAvG";
-    const url = `https://api.watchmode.com/v1/autocomplete-search/?apiKey=${apiKey}&search_value=${encodeURIComponent(query)}&search_type=`;
+async function buscarFilmes(consulta) {
+    const chaveApi = "K66WoK3A5L3ukxBkspeOqxT1GmAHOIXf44qDJAvG";
+    const url = `https://api.watchmode.com/v1/autocomplete-search/?apiKey=${chaveApi}&search_value=${encodeURIComponent(consulta)}&search_type=`;
 
     try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        displayResults(data.results);
-    } catch (error) {
-        console.error("Erro ao buscar dados:", error);
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
+        exibirResultadosFilmes(dados.results);
+    } catch (erro) {
+        console.error("Erro ao buscar dados:", erro);
     }
 }
 
-function displayResults(results) {
-    const resultsContainer = document.getElementById("results");
-    resultsContainer.innerHTML = "";
+function exibirResultadosFilmes(resultados) {
+    const containerResultados = document.getElementById("results");
+    containerResultados.innerHTML = "";
 
-    if (!results || results.length === 0) {
-        resultsContainer.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+    if (!resultados || resultados.length === 0) {
+        containerResultados.innerHTML = "<p>Nenhum resultado encontrado.</p>";
         return;
     }
 
-    results.forEach(item => {
-        const resultItem = document.createElement("div");
-        resultItem.classList.add("result-item");
+    resultados.forEach(item => {
+        const elementoResultado = document.createElement("div");
+        elementoResultado.classList.add("result-item");
 
-        const img = document.createElement("img");
-        img.src = item.image_url || "https://via.placeholder.com/80x120";
-        img.alt = item.name;
+        const imagem = document.createElement("img");
+        imagem.src = item.image_url || "https://via.placeholder.com/80x120";
+        imagem.alt = item.name;
 
-        const info = document.createElement("div");
-        info.classList.add("result-info");
+        const informacoes = document.createElement("div");
+        informacoes.classList.add("result-info");
 
-        const title = document.createElement("h3");
-        title.textContent = item.name;
+        const titulo = document.createElement("h3");
+        titulo.textContent = item.name;
 
-        const year = document.createElement("p");
-        year.textContent = `Ano de lançamento: ${item.year || "Desconhecido"}`;
+        const ano = document.createElement("p");
+        ano.textContent = `Ano de lançamento: ${item.year || "Desconhecido"}`;
 
-        const type = document.createElement("p");
-        type.textContent = `Tipo: ${item.type || "Desconhecido"}`;
+        const tipo = document.createElement("p");
+        tipo.textContent = `Tipo: ${item.type || "Desconhecido"}`;
 
         const link = document.createElement("a");
         link.href = `detalhes.html?id=${item.id}`;
         link.textContent = "Saiba mais sobre...";
 
-        info.appendChild(title);
-        info.appendChild(year);
-        info.appendChild(type);
-        info.appendChild(link);
+        informacoes.appendChild(titulo);
+        informacoes.appendChild(ano);
+        informacoes.appendChild(tipo);
+        informacoes.appendChild(link);
 
-        resultItem.appendChild(img);
-        resultItem.appendChild(info);
+        elementoResultado.appendChild(imagem);
+        elementoResultado.appendChild(informacoes);
 
-        resultsContainer.appendChild(resultItem);
+        containerResultados.appendChild(elementoResultado);
     });
 }
 
-function goBack() {
+function voltar() {
     window.location.href = "index.html";
 }
